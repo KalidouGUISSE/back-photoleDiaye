@@ -1,0 +1,1 @@
+{"version":3,"file":"isNotModerator.js","sourceRoot":"","sources":["../../../src/middleware/isNotModerator.ts"],"names":[],"mappings":"AAEA,MAAM,UAAU,cAAc,CAAC,GAAY,EAAE,GAAa,EAAE,IAAkB;IAC5E,IAAI,GAAG,CAAC,IAAI,EAAE,IAAI,KAAK,WAAW,EAAE,CAAC;QACnC,OAAO,GAAG,CAAC,MAAM,CAAC,GAAG,CAAC,CAAC,IAAI,CAAC;YAC1B,KAAK,EAAE,mGAAmG;SAC3G,CAAC,CAAC;IACL,CAAC;IACD,IAAI,EAAE,CAAC;AACT,CAAC"}
