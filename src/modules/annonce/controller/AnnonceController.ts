@@ -38,8 +38,8 @@ export class AnnonceController implements IAnnonceController {
         message: "Annonce publiée avec succès - En attente de modération",
         status: "pending_moderation"
       });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la publication de l'annonce" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la publication de l'annonce" });
     }
   }
 
@@ -47,8 +47,8 @@ export class AnnonceController implements IAnnonceController {
     try {
       const annonces = await this.annonceService.listerAnnonces();
       res.json(annonces);
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la récupération des annonces" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la récupération des annonces" });
     }
   }
 
@@ -60,8 +60,8 @@ export class AnnonceController implements IAnnonceController {
         total: annonces.length,
         message: "Annonces en attente de modération"
       });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la récupération des annonces en attente" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la récupération des annonces en attente" });
     }
   }
 
@@ -87,8 +87,8 @@ export class AnnonceController implements IAnnonceController {
         await this.annonceService.rejeterAnnonce(id);
         res.json({ message: "Annonce rejetée avec succès" });
       }
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la modération de l'annonce" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la modération de l'annonce" });
     }
   }
 
@@ -96,8 +96,8 @@ export class AnnonceController implements IAnnonceController {
     try {
       await this.annonceService.verifierExpiration();
       res.json({ message: "Annonces expirées vérifiées" });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la vérification des expirations" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la vérification des expirations" });
     }
   }
 
@@ -110,8 +110,8 @@ export class AnnonceController implements IAnnonceController {
       }
       const annonce = await this.annonceService.consulterAnnonce(id);
       res.json(annonce);
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la consultation de l'annonce" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la consultation de l'annonce" });
     }
   }
 
@@ -119,8 +119,8 @@ export class AnnonceController implements IAnnonceController {
     try {
       await this.annonceService.notifierExpirationProche();
       res.json({ message: "Notifications d'expiration envoyées (console)" });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de l'envoi des notifications" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de l'envoi des notifications" });
     }
   }
 
@@ -138,8 +138,8 @@ export class AnnonceController implements IAnnonceController {
         total: annonces.length,
         message: "Mes annonces récupérées"
       });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la récupération des annonces" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la récupération des annonces" });
     }
   }
 }

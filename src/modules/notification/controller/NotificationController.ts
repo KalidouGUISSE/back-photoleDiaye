@@ -18,8 +18,8 @@ export class NotificationController {
         total: notifications.length,
         nonLues: notifications.filter(n => !n.isRead).length
       });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la récupération des notifications" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la récupération des notifications" });
     }
   }
 
@@ -33,8 +33,8 @@ export class NotificationController {
 
       await this.notificationService.marquerNotificationCommeVue(id);
       res.json({ message: "Notification marquée comme vue" });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la mise à jour de la notification" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la mise à jour de la notification" });
     }
   }
 }

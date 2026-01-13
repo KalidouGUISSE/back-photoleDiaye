@@ -18,7 +18,7 @@ export class NotificationController {
             });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la récupération des notifications" });
+            res.status(500).json({ error: error.message || "Erreur lors de la récupération des notifications" });
         }
     }
     async marquerCommeVue(req, res) {
@@ -32,7 +32,7 @@ export class NotificationController {
             res.json({ message: "Notification marquée comme vue" });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la mise à jour de la notification" });
+            res.status(500).json({ error: error.message || "Erreur lors de la mise à jour de la notification" });
         }
     }
 }

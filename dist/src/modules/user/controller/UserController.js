@@ -15,7 +15,7 @@ export class UserController {
             res.json({ profile });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la récupération du profil" });
+            res.status(500).json({ error: error.message || "Erreur lors de la récupération du profil" });
         }
     }
     // 🛡️ Route de modération - Accès: MODERATOR uniquement (middleware isModerator)
@@ -29,7 +29,7 @@ export class UserController {
             });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la récupération des utilisateurs" });
+            res.status(500).json({ error: error.message || "Erreur lors de la récupération des utilisateurs" });
         }
     }
     // 🛡️ Route de modération - Accès: MODERATOR uniquement (middleware isModerator)
@@ -55,7 +55,7 @@ export class UserController {
                 res.status(400).json({ error: error.message });
             }
             else {
-                res.status(500).json({ error: "Erreur lors de la promotion" });
+                res.status(500).json({ error: error.message || "Erreur lors de la promotion" });
             }
         }
     }
@@ -82,7 +82,7 @@ export class UserController {
                 res.status(400).json({ error: error.message });
             }
             else {
-                res.status(500).json({ error: "Erreur lors de la rétrogradation" });
+                res.status(500).json({ error: error.message || "Erreur lors de la rétrogradation" });
             }
         }
     }

@@ -16,8 +16,8 @@ export class UserController implements IUserController {
 
       const profile = await this.userService.getProfile(userId);
       res.json({ profile });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la récupération du profil" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la récupération du profil" });
     }
   }
 
@@ -30,8 +30,8 @@ export class UserController implements IUserController {
         total: users.length,
         message: "Liste des utilisateurs récupérée avec succès"
       });
-    } catch (error) {
-      res.status(500).json({ error: "Erreur lors de la récupération des utilisateurs" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Erreur lors de la récupération des utilisateurs" });
     }
   }
 
@@ -58,7 +58,7 @@ export class UserController implements IUserController {
       } else if (error.message === "L'utilisateur est déjà VIP") {
         res.status(400).json({ error: error.message });
       } else {
-        res.status(500).json({ error: "Erreur lors de la promotion" });
+        res.status(500).json({ error: error.message || "Erreur lors de la promotion" });
       }
     }
   }
@@ -86,7 +86,7 @@ export class UserController implements IUserController {
       } else if (error.message === "L'utilisateur n'est pas VIP") {
         res.status(400).json({ error: error.message });
       } else {
-        res.status(500).json({ error: "Erreur lors de la rétrogradation" });
+        res.status(500).json({ error: error.message || "Erreur lors de la rétrogradation" });
       }
     }
   }

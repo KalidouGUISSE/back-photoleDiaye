@@ -20,7 +20,15 @@ export class AuthController {
         }
         catch (err) {
             const error = err;
-            res.status(400).json({ error: error.message });
+            if (error.message.includes("Unique constraint failed on the fields: (`email`)")) {
+                res.status(400).json({ error: "Email déjà utilisé" });
+            }
+            else if (error.message.includes("Can't reach database server")) {
+                res.status(500).json({ error: "Erreur de connexion à la base de données" });
+            }
+            else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
     async login(req, res) {
@@ -37,7 +45,12 @@ export class AuthController {
         }
         catch (err) {
             const error = err;
-            res.status(400).json({ error: error.message });
+            if (error.message.includes("Can't reach database server")) {
+                res.status(500).json({ error: "Erreur de connexion à la base de données" });
+            }
+            else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
     async refresh(req, res) {
@@ -54,7 +67,15 @@ export class AuthController {
         }
         catch (err) {
             const error = err;
-            res.status(400).json({ error: error.message });
+            if (error.message.includes("Unique constraint failed on the fields: (`email`)")) {
+                res.status(400).json({ error: "Email déjà utilisé" });
+            }
+            else if (error.message.includes("Can't reach database server")) {
+                res.status(500).json({ error: "Erreur de connexion à la base de données" });
+            }
+            else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
     async logout(req, res) {
@@ -79,7 +100,12 @@ export class AuthController {
         }
         catch (err) {
             const error = err;
-            res.status(400).json({ error: error.message });
+            if (error.message.includes("Can't reach database server")) {
+                res.status(500).json({ error: "Erreur de connexion à la base de données" });
+            }
+            else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
 }

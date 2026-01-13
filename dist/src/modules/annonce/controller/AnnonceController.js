@@ -33,7 +33,7 @@ export class AnnonceController {
             });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la publication de l'annonce" });
+            res.status(500).json({ error: error.message || "Erreur lors de la publication de l'annonce" });
         }
     }
     async lister(req, res) {
@@ -42,7 +42,7 @@ export class AnnonceController {
             res.json(annonces);
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la récupération des annonces" });
+            res.status(500).json({ error: error.message || "Erreur lors de la récupération des annonces" });
         }
     }
     async listerEnAttente(req, res) {
@@ -55,7 +55,7 @@ export class AnnonceController {
             });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la récupération des annonces en attente" });
+            res.status(500).json({ error: error.message || "Erreur lors de la récupération des annonces en attente" });
         }
     }
     async moderer(req, res) {
@@ -80,7 +80,7 @@ export class AnnonceController {
             }
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la modération de l'annonce" });
+            res.status(500).json({ error: error.message || "Erreur lors de la modération de l'annonce" });
         }
     }
     async verifierExpiration(req, res) {
@@ -89,7 +89,7 @@ export class AnnonceController {
             res.json({ message: "Annonces expirées vérifiées" });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la vérification des expirations" });
+            res.status(500).json({ error: error.message || "Erreur lors de la vérification des expirations" });
         }
     }
     async consulter(req, res) {
@@ -103,7 +103,7 @@ export class AnnonceController {
             res.json(annonce);
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la consultation de l'annonce" });
+            res.status(500).json({ error: error.message || "Erreur lors de la consultation de l'annonce" });
         }
     }
     async notifierExpiration(req, res) {
@@ -112,7 +112,7 @@ export class AnnonceController {
             res.json({ message: "Notifications d'expiration envoyées (console)" });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de l'envoi des notifications" });
+            res.status(500).json({ error: error.message || "Erreur lors de l'envoi des notifications" });
         }
     }
     async listerMesAnnonces(req, res) {
@@ -130,7 +130,7 @@ export class AnnonceController {
             });
         }
         catch (error) {
-            res.status(500).json({ error: "Erreur lors de la récupération des annonces" });
+            res.status(500).json({ error: error.message || "Erreur lors de la récupération des annonces" });
         }
     }
 }

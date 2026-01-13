@@ -22,7 +22,13 @@ export class AuthController {
       res.status(201).json({ message: "Utilisateur créé" });
     } catch (err) {
       const error = err as Error;
-      res.status(400).json({ error: error.message });
+      if (error.message.includes("Unique constraint failed on the fields: (`email`)")) {
+        res.status(400).json({ error: "Email déjà utilisé" });
+      } else if (error.message.includes("Can't reach database server")) {
+        res.status(500).json({ error: "Erreur de connexion à la base de données" });
+      } else {
+        res.status(500).json({ error: error.message });
+      }
     }
   }
 
@@ -40,7 +46,11 @@ export class AuthController {
       res.json(tokens);
     } catch (err) {
       const error = err as Error;
-      res.status(400).json({ error: error.message });
+      if (error.message.includes("Can't reach database server")) {
+        res.status(500).json({ error: "Erreur de connexion à la base de données" });
+      } else {
+        res.status(500).json({ error: error.message });
+      }
     }
   }
 
@@ -58,7 +68,13 @@ export class AuthController {
       res.json({ accessToken: newAccessToken });
     } catch (err) {
       const error = err as Error;
-      res.status(400).json({ error: error.message });
+      if (error.message.includes("Unique constraint failed on the fields: (`email`)")) {
+        res.status(400).json({ error: "Email déjà utilisé" });
+      } else if (error.message.includes("Can't reach database server")) {
+        res.status(500).json({ error: "Erreur de connexion à la base de données" });
+      } else {
+        res.status(500).json({ error: error.message });
+      }
     }
   }
 
@@ -84,7 +100,11 @@ export class AuthController {
       res.json({ message: "Déconnexion réussie" });
     } catch (err) {
       const error = err as Error;
-      res.status(400).json({ error: error.message });
+      if (error.message.includes("Can't reach database server")) {
+        res.status(500).json({ error: "Erreur de connexion à la base de données" });
+      } else {
+        res.status(500).json({ error: error.message });
+      }
     }
   }
 }
