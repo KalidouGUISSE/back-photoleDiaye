@@ -11,7 +11,7 @@ export class AuthService implements IAuthService {
     await this.authRepository.createUser(email, hashedPassword);
   }
 
-  async login(email: string, password: string): Promise<{ accessToken: string; refreshToken: string }> {
+  async login(email: string, password: string): Promise<{ accessToken: string; refreshToken: string; user: { id: string; email: string; role: string } }> {
     const user = await this.authRepository.findUserByEmail(email);
     if (!user) throw new Error("Utilisateur introuvable");
 
@@ -31,7 +31,15 @@ export class AuthService implements IAuthService {
     );
 
     await this.authRepository.saveRefreshToken(user.id, refreshToken);
-    return { accessToken, refreshToken };
+    return {
+      accessToken,
+      refreshToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      }
+    };
   }
 
   async refreshAccessToken(refreshToken: string): Promise<string> {
