@@ -11,5 +11,6 @@ export declare class AnnonceController implements IAnnonceController {
     verifierExpiration(req: Request, res: Response): Promise<void>;
     consulter(req: Request, res: Response): Promise<void>;
     notifierExpiration(req: Request, res: Response): Promise<void>;
+    listerMesAnnonces(req: Request, res: Response): Promise<void>;
 }
 //# sourceMappingURL=AnnonceController.d.ts.map

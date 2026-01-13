@@ -41,6 +41,17 @@ export class AnnonceRepository {
     async findById(id) {
         return prisma.annonce.findUnique({ where: { id } });
     }
+    async findByUserId(userId) {
+        return prisma.annonce.findMany({
+            where: { userId },
+            include: {
+                user: {
+                    select: { role: true, id: true, email: true, createdAt: true }
+                }
+            },
+            orderBy: { createdAt: 'desc' } // Plus récentes en premier
+        });
+    }
     async expireOldAnnonces() {
         await prisma.annonce.updateMany({
             where: {
@@ -54,6 +65,12 @@ export class AnnonceRepository {
         await prisma.annonce.update({
             where: { id },
             data: { isModerated: true },
+        });
+    }
+    async rejectAnnonce(id) {
+        // Supprime l'annonce rejetée de la base de données
+        await prisma.annonce.delete({
+            where: { id },
         });
     }
     async incrementViews(id) {

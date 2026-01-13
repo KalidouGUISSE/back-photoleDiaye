@@ -4,8 +4,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const token = process.env.SYSTEM_TOKEN;
+const baseUrl = process.env.API_URL
 
-axios.patch("http://localhost:3000/annonce/expire", null, {
+
+axios.patch(`${baseUrl}/annonce/expire`, null, {
   headers: {
     Authorization: `Bearer ${token}`,
   },

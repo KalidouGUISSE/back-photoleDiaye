@@ -1,5 +1,6 @@
 import { annonceSchema } from "../validation/annonce.schema.js";
 import { uploadImage } from "../../../utils/uploadImage.js";
+import { formatZodErrors } from "../../../utils/formatZodErrors.js";
 export class AnnonceController {
     annonceService;
     constructor(annonceService) {
@@ -9,7 +10,7 @@ export class AnnonceController {
         try {
             const result = annonceSchema.safeParse(req.body);
             if (!result.success) {
-                res.status(400).json({ error: result.error.issues });
+                res.status(400).json({ error: formatZodErrors(result.error) });
                 return;
             }
             const { title, description, imageBase64, price } = result.data;
@@ -60,12 +61,23 @@ export class AnnonceController {
     async moderer(req, res) {
         try {
             const { id } = req.params;
+            const { action } = req.body;
             if (!id) {
                 res.status(400).json({ error: "ID de l'annonce requis" });
                 return;
             }
-            await this.annonceService.modererAnnonce(id);
-            res.json({ message: "Annonce modérée avec succès" });
+            if (!action || !['approve', 'reject'].includes(action)) {
+                res.status(400).json({ error: "Action invalide. Utilisez 'approve' ou 'reject'" });
+                return;
+            }
+            if (action === 'approve') {
+                await this.annonceService.approuverAnnonce(id);
+                res.json({ message: "Annonce approuvée avec succès" });
+            }
+            else {
+                await this.annonceService.rejeterAnnonce(id);
+                res.json({ message: "Annonce rejetée avec succès" });
+            }
         }
         catch (error) {
             res.status(500).json({ error: "Erreur lors de la modération de l'annonce" });
@@ -101,6 +113,24 @@ export class AnnonceController {
         }
         catch (error) {
             res.status(500).json({ error: "Erreur lors de l'envoi des notifications" });
+        }
+    }
+    async listerMesAnnonces(req, res) {
+        try {
+            const userId = req.user?.userId;
+            if (!userId) {
+                res.status(401).json({ error: "Utilisateur non authentifié" });
+                return;
+            }
+            const annonces = await this.annonceService.listerMesAnnonces(userId);
+            res.json({
+                annonces,
+                total: annonces.length,
+                message: "Mes annonces récupérées"
+            });
+        }
+        catch (error) {
+            res.status(500).json({ error: "Erreur lors de la récupération des annonces" });
         }
     }
 }

@@ -26,8 +26,19 @@ export class AnnonceService {
     async listerAnnoncesEnAttente() {
         return this.annonceRepository.findPendingModeration();
     }
+    async listerMesAnnonces(userId) {
+        return this.annonceRepository.findByUserId(userId);
+    }
     async modererAnnonce(id) {
         await this.annonceRepository.moderateAnnonce(id);
+    }
+    async approuverAnnonce(id) {
+        await this.annonceRepository.moderateAnnonce(id);
+        console.log(`✅ Annonce ${id} approuvée par un modérateur`);
+    }
+    async rejeterAnnonce(id) {
+        await this.annonceRepository.rejectAnnonce(id);
+        console.log(`❌ Annonce ${id} rejetée par un modérateur`);
     }
     async verifierExpiration() {
         await this.annonceRepository.expireOldAnnonces();
@@ -35,10 +46,10 @@ export class AnnonceService {
     async consulterAnnonce(id) {
         await this.annonceRepository.incrementViews(id);
         const annonce = await this.annonceRepository.findById(id);
-        const vendeur = await this.userRepository.findById(annonce.userId);
+        const user = await this.userRepository.findById(annonce.userId);
         return {
             ...annonce,
-            vendeur,
+            user,
         };
     }
     async notifierExpirationProche() {

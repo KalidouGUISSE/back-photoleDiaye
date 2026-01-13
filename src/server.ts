@@ -13,6 +13,7 @@ import { swaggerUi, specs } from "./swagger.js";
 dotenv.config();
 
 const app = express();
+const baseUrl = process.env.API_URL
 
 // CORS configuration - temporarily allow all origins for debugging
 app.use(cors({
@@ -36,39 +37,39 @@ app.get('/api-docs.json', (req, res) => res.json(specs));
 
 // Tâche CRON qui s'exécute tous les lundis à 2h
 cron.schedule("0 2 * * 1", async () => {
-  try {
-    console.log("🤖 Démarrage de la tâche hebdomadaire...");
-    
-    // 1. D'abord, envoyer les notifications d'expiration
-    console.log("📧 Envoi des notifications d'expiration...");
-    await axios.get("http://localhost:3000/annonce/system/notify-expiring", {
-      headers: { Authorization: `Bearer ${process.env.SYSTEM_TOKEN}` },
-    });
-    
-    // 2. Ensuite, supprimer les annonces expirées
-    console.log("🗑️ Suppression des annonces expirées...");
-    await axios.patch("http://localhost:3000/annonce/expire", null, {
-      headers: { Authorization: `Bearer ${process.env.SYSTEM_TOKEN}` },
-    });
-    
-    console.log("✅ Tâche hebdomadaire terminée avec succès");
-  } catch (error: any) {
-    console.error("❌ Erreur lors de la tâche hebdomadaire:", error.message);
-  }
+    try {
+        console.log("🤖 Démarrage de la tâche hebdomadaire...");
+
+        // 1. D'abord, envoyer les notifications d'expiration
+        console.log("📧 Envoi des notifications d'expiration...");
+        await axios.get(`${baseUrl}/annonce/system/notify-expiring`, {
+            headers: { Authorization: `Bearer ${process.env.SYSTEM_TOKEN}` },
+        });
+
+        // 2. Ensuite, supprimer les annonces expirées
+        console.log("🗑️ Suppression des annonces expirées...");
+        await axios.patch(`${baseUrl}/annonce/expire`, null, {
+            headers: { Authorization: `Bearer ${process.env.SYSTEM_TOKEN}` },
+        });
+
+        console.log("✅ Tâche hebdomadaire terminée avec succès");
+    } catch (error: any) {
+        console.error("❌ Erreur lors de la tâche hebdomadaire:", error.message);
+    }
 });
 
 // Tâche CRON quotidienne à 18h pour les notifications urgentes
 cron.schedule("0 18 * * *", async () => {
-  try {
-    console.log("🚨 Vérification quotidienne des annonces qui expirent bientôt...");
-    await axios.get("http://localhost:3000/annonce/system/notify-expiring", {
-      headers: { Authorization: `Bearer ${process.env.SYSTEM_TOKEN}` },
-    });
-  } catch (error: any) {
-    console.error("❌ Erreur lors de la notification quotidienne:", error.message);
-  }
+    try {
+        console.log("🚨 Vérification quotidienne des annonces qui expirent bientôt...");
+        await axios.get(`${baseUrl}/annonce/system/notify-expiring`, {
+            headers: { Authorization: `Bearer ${process.env.SYSTEM_TOKEN}` },
+        });
+    } catch (error: any) {
+        console.error("❌ Erreur lors de la notification quotidienne:", error.message);
+    }
 });
 
 app.listen(3000, () => {
-  console.log("🚀 Serveur lancé sur http://localhost:3000");
+  console.log(`🚀 Serveur lancé sur ${baseUrl}`);
 });
