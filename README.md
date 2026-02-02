@@ -159,7 +159,7 @@ npm run dev
 
 ## 📚 Documentation API
 
-La documentation interactive est disponible à : **http://localhost:3000/api-docs**
+La documentation interactive est disponible à : **https://back-photolediaye.onrender.com/api-docs**
 
 ### Aperçu de la Documentation
 
