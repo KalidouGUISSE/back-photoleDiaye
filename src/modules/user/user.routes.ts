@@ -26,7 +26,7 @@ const userController = new UserController(userService);
  * /user/register:
  *   post:
  *     summary: Enregistrer un nouvel utilisateur
- *     tags: [Authentification]
+ *     tags: [Utilisateurs]
  *     requestBody:
  *       required: true
  *       content:
