@@ -29,7 +29,7 @@ const options = {
             },
         ],
     },
-    apis: ['./src/modules/*/routes/*.routes.ts'], // Chemins vers les fichiers de routes
+    apis: ['./src/modules/**/*.routes.ts'], // Chemins vers les fichiers de routes
 };
 const specs = swaggerJSDoc(options);
 export { swaggerUi, specs };

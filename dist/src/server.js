@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import authRoutes from "./modules/auth/routes/auth.routes.js";
-import annonceRoutes from "./modules/annonce/routes/annonce.routes.js";
-import userRoutes from "./modules/user/routes/user.routes.js";
-import notificationRoutes from "./modules/notification/routes/notification.routes.js";
+import authRoutes from "./modules/auth/auth.routes.js";
+import annonceRoutes from "./modules/annonce/annonce.routes.js";
+import userRoutes from "./modules/user/user.routes.js";
+import notificationRoutes from "./modules/notification/notification.routes.js";
 import "./types/index.js";
 import cron from "node-cron";
 import axios from "axios";

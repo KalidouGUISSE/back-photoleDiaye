@@ -8,7 +8,7 @@ const authController = new AuthController(new AuthService(new AuthRepository()))
  * @swagger
  * /auth/register:
  *   post:
- *     summary: Enregistrer un nouvel utilisateur
+ *     summary:
  *     tags: [Authentification]
  *     requestBody:
  *       required: true

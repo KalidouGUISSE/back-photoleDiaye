@@ -1,6 +1,8 @@
 import { Role } from "@prisma/client";
 
 export interface IUserRepository {
+  createUser(email: string, hashedPassword: string): Promise<void>;
+
   // Fonctions de base
   findById(id: string): Promise<any>;
   

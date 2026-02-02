@@ -1,4 +1,5 @@
 export interface IUserService {
+  register(email: string, password: string): Promise<void>;
   // Fonctions utilisateur standard
   getProfile(userId: string): Promise<any>;
   

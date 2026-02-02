@@ -1,4 +1,5 @@
 export interface IUserService {
+    register(email: string, password: string): Promise<void>;
     getProfile(userId: string): Promise<any>;
     listAllUsers(): Promise<any[]>;
     promoteToVIP(userId: string): Promise<void>;
